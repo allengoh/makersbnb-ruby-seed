@@ -62,6 +62,21 @@ describe Application do
       expect(response.status).to eq 200
 
       expect(response.body).to include ("<h1>Welcome to MakersBNB!</h1>")
+      expect(response.body).to include('<form method="POST" action="/login">')
+      expect(response.body).to include('<input type="text" name="email">')
+      expect(response.body).to include('<input type="password" name="password">')
+    end
+  end
+
+  context 'POST /login' do
+    it 'returns spaces.erb if password matches' do
+      response = post('/login', 
+      email: 'bob@gmail.com',
+      password: '12345'
+      )
+
+      expect(response.status).to eq(302)
+      expect(response.location).to include('/spaces')
     end
   end
 
@@ -88,7 +103,6 @@ describe Application do
       expect(response.body).to include ("<h1>Your sign up was successful!</h1>")
     end
   end
-  
 end
 
 
