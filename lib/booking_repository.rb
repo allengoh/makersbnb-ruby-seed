@@ -10,7 +10,8 @@ class BookingRepository
     results.each do |record|
       booking = Booking.new
       booking.id = record['id']
-      booking.date_booked = record['date_booked']
+      booking.book_from = record['book_from']
+      booking.book_to = record['book_to']
       booking.confirmed = record['confirmed']
       booking.space_id = record['space_id']
 
@@ -20,8 +21,8 @@ class BookingRepository
   end
 
   def create(booking)
-    sql = 'INSERT INTO bookings (date_booked, confirmed, space_id) VALUES ($1, $2, $3);'
-    sql_params = [booking.date_booked, booking.confirmed, booking.space_id]
+    sql = 'INSERT INTO bookings (book_from, book_to, confirmed, space_id) VALUES ($1, $2, $3, $4);'
+    sql_params = [booking.book_from,booking.book_to, booking.confirmed, booking.space_id]
 
     DatabaseConnection.exec_params(sql, sql_params)
 

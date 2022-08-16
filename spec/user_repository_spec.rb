@@ -25,24 +25,6 @@ RSpec.describe UserRepository do
 
   end
 
-  it "creates a user" do
-    
-    repo = UserRepository.new
-
-    user = User.new
-    user.email = "jane@yahoo.com"
-    user.password = "makers123"
-    user.first_name = "Jane"
-    user.last_name = "Doe"
-
-    repo.create(user)
-
-    expect(repo.all.length).to eq(3)
-    expect(repo.all.last.first_name).to eq("Jane")
-    expect(repo.all.last.last_name).to eq("Doe")
-
-  end
-
   it "creates an encrypted user account" do
     repo = UserRepository.new
 
@@ -52,7 +34,7 @@ RSpec.describe UserRepository do
     user.first_name = "Jane"
     user.last_name = "Doe"
 
-    repo.create_encrypted(user)
+    repo.create(user)
 
     expect(repo.all.length).to eq(3)
     expect(repo.all.last.first_name).to eq("Jane")
