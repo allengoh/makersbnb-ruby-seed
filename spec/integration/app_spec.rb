@@ -23,21 +23,22 @@ describe Application do
 
       expect(response.status).to eq 200
 
-      expect(response.body).to include ("Sign Up")
+      expect(response.body).to include ("<h1>Welcome to MakersBNB!</h1>")
+    end
   end
 
   context 'GET /signup/new' do
-    xit 'returns 200 OK and form for user to sign up' do
+    it 'returns 200 OK and form for user to sign up' do
       response = get('/signup/new')
 
       expect(response.status).to eq 200
 
-      expect(response_body).to include ("Sign Up")
+      expect(response.body).to include ("<h1>Fill in your details below to sign up</h1>")
     end
   end
 
   context 'POST /signup' do
-    xit 'returns 200 OK and posts form with filled in information' do
+    it 'returns 200 OK and posts form with filled in information' do
       response = post('/signup', 
       first_name: 'Jane', 
       last_name: 'Doe', 
@@ -46,11 +47,9 @@ describe Application do
 
       expect(response.status).to eq 200
 
-      expect(response.body).to include ("Sign up successful.")
+      expect(response.body).to include ("<h1>Your sign up was successful!</h1>")
     end
   end
-
-
 
 
 end
