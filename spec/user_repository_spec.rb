@@ -13,16 +13,14 @@ RSpec.describe UserRepository do
     reset_seeds_table
   end
 
-
-  it "lists the users" do 
-
+  it "finds the user" do
     repo = UserRepository.new
+    email = "bob@gmail.com"
+    user = repo.find_by_email(email)
 
-    users = repo.all # list of users
-    expect(users.length).to eq(2)
-    expect(users[0].email).to eq('bob@gmail.com')
-    expect(users[1].password).to eq('password')
-
+    expect(user.email).to eq("bob@gmail.com")
+    expect(user.first_name).to eq("Bob")
+    expect(user.last_name).to eq("Billy")
   end
 
   it "creates an encrypted user account" do
