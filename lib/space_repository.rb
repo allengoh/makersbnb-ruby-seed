@@ -1,4 +1,5 @@
 require_relative 'space'
+require_relative 'database_connection'
 
 class SpaceRepository
   def all
@@ -24,6 +25,7 @@ class SpaceRepository
     sql = 'INSERT INTO spaces (name, description, price_per_night, user_id) VALUES ($1, $2, $3, $4);'
     params = [space.name, space.description, space.price_per_night, space.user_id]
     result = DatabaseConnection.exec_params(sql, params)
+    
   end
 end
 
