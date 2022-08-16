@@ -40,9 +40,25 @@ RSpec.describe UserRepository do
     expect(new_user.password).to eq("makers123")
   end
 
-  xit 'logs in a user' do
-    repo = UserRepository.new
+  context "login a user" do
+    it 'returns false when given an incorrect password' do
+      email = "bob@gmail.com"
+      submitted_password = "INCORRECT_PASSWORD"
 
-    repo
+      repo = UserRepository.new
+      result = repo.login(email, submitted_password)
+
+      expect(result).to eq false
+    end
+
+    it 'returns true when given the correct password' do
+      email = "bob@gmail.com"
+      submitted_password = "12345"
+
+      repo = UserRepository.new
+      result = repo.login(email, submitted_password)
+
+      expect(result).to eq true
+    end
   end
 end

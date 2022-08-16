@@ -12,6 +12,16 @@ class UserRepository
     DatabaseConnection.exec_params(sql, params)
   end
 
+  def login(email, submitted_password)
+    user = find_by_email(email)
+
+    return nil if user.nil?
+
+    user_password = BCrypt::Password.new(user.password)
+
+    return user_password == submitted_password
+  end
+
   def find_by_email(email)
     sql = 'SELECT * FROM users WHERE email = $1'
     params = [email]
