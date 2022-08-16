@@ -31,5 +31,27 @@ describe Application do
     end
   end
 
+  context "GET /spaces/new" do
+  it "adds return a form to add a new space" do
+    response = get('/spaces/new')
+    expect(response.status).to eq(200)
+    expect(response.body).to include('<form method="POST" action="/spaces/new">')
+    expect(response.body).to include('<input type="text" name="name">')
+    expect(response.body).to include('<input type="text" name="description">')
+    expect(response.body).to include('<input type="text" name="price_per_night">')
+    end
+  end
 
+  context "POST /spaces" do
+    it "adds a new space" do
+      response = post('/spaces',
+      name: 'Treehouse',
+      description: 'Live for the night... up high',
+      price_per_night: '30'
+      )
+
+      expect(response.status).to eq(200)
+
+    end
+  end
 end

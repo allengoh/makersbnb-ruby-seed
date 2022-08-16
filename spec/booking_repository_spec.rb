@@ -2,7 +2,7 @@ require 'booking_repository'
 
 def reset_makersbnb
   seed_sql = File.read('spec/seeds/ql')
-  connection = PG.connect({ host: '127.0.0.1', dbname: 'makersbnbt' })
+  connection = PG.connect({ host: '127.0.0.1', dbname: 'makersbnb_test'})
   connection.exec(seed_sql)
 end
 
