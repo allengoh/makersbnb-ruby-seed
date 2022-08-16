@@ -28,15 +28,21 @@ RSpec.describe UserRepository do
 
     user = User.new
     user.email = "jane@yahoo.com"
-    user.password = "makers123"
     user.first_name = "Jane"
     user.last_name = "Doe"
 
+    allow(BCrypt::Password).to receive(:create).and_return("makers123")
     repo.create(user)
+    new_user = repo.find_by_email("jane@yahoo.com")
 
-    expect(repo.all.length).to eq(3)
-    expect(repo.all.last.first_name).to eq("Jane")
-    expect(repo.all.last.last_name).to eq("Doe")
+    expect(new_user.first_name).to eq("Jane")
+    expect(new_user.last_name).to eq("Doe")
+    expect(new_user.password).to eq("makers123")
   end
 
+  xit 'logs in a user' do
+    repo = UserRepository.new
+
+    repo
+  end
 end
