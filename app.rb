@@ -2,6 +2,8 @@ require 'sinatra/base'
 require 'sinatra/reloader'
 require_relative 'lib/database_connection'
 require_relative 'lib/space_repository'
+require_relative 'lib/user_repository'
+
 
 if ENV['ENV'] == 'test'
   database_name = 'makersbnb_test'
@@ -35,8 +37,34 @@ class Application < Sinatra::Base
     space.name = params[:name]
     space.description = params[:description]
     space.price_per_night = params[:price_per_night]
-    space.user_id = 1
 
     repo.create(space)
+
+    also_reload 'lib/user_repository'
   end
+  
+  get "/" do
+    return erb(:index)
+  end
+
+  get "/signup/new" do 
+    return erb(:signup)
+  end
+
+  post '/signup' do
+    
+    user = User.new
+    user.first_name = params[:first_name]
+    user.last_name = params[:last_name]
+    user.email = params[:email]
+    user.password = params[:password]
+  
+    repo = UserRepository.new
+ 
+    repo.create(user)
+
+    return erb(:signup_confirmation)
+
+  end
+
 end
