@@ -5,7 +5,15 @@
       <% @spaces.each do |space| %>
         <div>Name: <%= space.name %></div>
         <div>Description: <%= space.description %></div>
-        <div>Price per night: £<%= space.price_per_night%></div>
+        <div>Price per night: <%= space.price_per_night%></div>
+        <br />
       <% end %>
+    <div>
+      <a href='/'>Return to homepage.</a>
+    </div>
+
+    <div>
+      <a href='/spaces/new'>List a new space.</a>
+    </div>
   </body>
 </html>
