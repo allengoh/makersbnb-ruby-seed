@@ -80,8 +80,8 @@ describe Application do
 
       expect(response.body).to include ("<h1>Welcome to MakersBNB!</h1>")
       expect(response.body).to include('<form method="POST" action="/login">')
-      expect(response.body).to include('<input type="text" name="email">')
-      expect(response.body).to include('<input type="password" name="password">')
+      expect(response.body).to include('<input type="text" name="email" placeholder="Email address">')
+      expect(response.body).to include('<input type="password" name="password" placeholder="Password">')
     end
   end
 
