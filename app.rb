@@ -96,7 +96,6 @@ class Application < Sinatra::Base
   get "/logout" do
     session[:user_id] = nil
     return erb(:logout)
-    end
   end
 
   get "/signup/new" do 
@@ -116,4 +115,4 @@ class Application < Sinatra::Base
 
     return erb(:signup_confirmation)
   end
-
+end
