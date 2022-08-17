@@ -69,6 +69,7 @@ class Application < Sinatra::Base
 
   get "/signup/new" do 
     return erb(:signup)
+  end
 
   get "/" do
     return erb(:index)
