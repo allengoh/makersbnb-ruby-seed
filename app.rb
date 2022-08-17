@@ -71,23 +71,27 @@ class Application < Sinatra::Base
     end
   end
 
-  get "/signup/new" do 
-    return erb(:signup)
+  get "/logout" do
+    session[:user_id] = nil
+    return erb(:logout)
+    end
   end
 
-  post '/signup' do
-    user = User.new
-    user.first_name = params[:first_name]
-    user.last_name = params[:last_name]
-    user.email = params[:email]
-    user.password = params[:password]
+  # get "/signup/new" do 
+  #   return erb(:signup)
+  # end
+
+  # post '/signup' do
+  #   user = User.new
+  #   user.first_name = params[:first_name]
+  #   user.last_name = params[:last_name]
+  #   user.email = params[:email]
+  #   user.password = params[:password]
   
-    repo = UserRepository.new
+  #   repo = UserRepository.new
  
-    repo.create(user)
+  #   repo.create(user)
 
-    return erb(:signup_confirmation)
-  end
+  #   return erb(:signup_confirmation)
+  # end
 
-
-end
