@@ -5,6 +5,15 @@
 
     <p>Date from: <%=@date_from%></p>
     <p>Date to: <%=@date_to%></p>
+    <br />
+    <form method="POST" action="/spaces/filtered">
+      <input type="date" name="date_from">
+      <input type="date" name="date_to">
+      <input type="submit" value="Filter">
+    </form>
+    <form method="POST" action="/spaces/filtered">
+      <input type ="submit" value ="Clear"> 
+    </form>
 
     <% @filtered.each do |space| %>
       <div>Name: <%= space.name %></div>
