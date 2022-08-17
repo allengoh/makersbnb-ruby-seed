@@ -31,7 +31,7 @@ describe Application do
   end
 
   context "GET /spaces/new" do
-    xit "adds return a form to add a new space" do
+    it "adds return a form to add a new space" do
       response = get('/spaces/new')
       expect(response.status).to eq(200)
       expect(response.body).to include('<form method="POST" action="/spaces">')
@@ -42,7 +42,7 @@ describe Application do
   end
 
   context "POST /spaces" do
-    xit "adds a new space" do
+    it "adds a new space" do
       response = post('/spaces',
       name: 'Treehouse',
       description: 'Live for the night... up high',
@@ -91,17 +91,17 @@ describe Application do
     end
   end
 
-  context 'POST /logout' do
+  context 'GET /logout' do
     it 'logs out the user (ends current session)' do
       response = get('/logout')
 
       expect(response.status).to eq 200
-      expect(response.body).to include ('<h1>You just log out!</h1>')
+      expect(response.body).to include ('<h1>You just log out! Redirecting to homepage in 3 seconds.</h1>')
     end
   end
 
   context 'GET /signup/new' do
-    xit 'returns 200 OK and form for user to sign up' do
+    it 'returns 200 OK and form for user to sign up' do
       response = get('/signup/new')
 
      expect(response.status).to eq 200
@@ -110,35 +110,25 @@ describe Application do
   end
 
  context 'POST /signup' do
-    xit 'returns 200 OK and posts form with filled in information' do
-    response = post('/signup', 
+    it 'returns 200 OK and posts form with filled in information' do
+      response = post('/signup', 
       first_name: 'Jane', 
       last_name: 'Doe', 
-     email: 'janedoe@email.com', 
-     password: 'password123')
+      email: 'janedoe@email.com', 
+      password: 'password123')
 
-   expect(response.status).to eq 200
-
-      expect(response.body).to include ("<h1>Your sign up was successful!</h1>")
-    end
-   end
-
+      expect(response.status).to eq 200
       expect(response.body).to include ("<h1>Your sign up was successful!</h1>")
     end
   end
 
   context "GET /login/new" do
-    
-    it "returns a form for logging in" do 
-
+    it "returns a form for logging in" do
       response = get("/login/new")
 
       expect(response.status).to eq 200
       expect(response.body).to include ("<input type=\"submit\" value=\"Log in now.\" />")
-
     end
   end
-
-
 end
 
