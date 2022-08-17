@@ -38,14 +38,14 @@ class Application < Sinatra::Base
   end
 
   post '/spaces' do
-    repo = SpaceRepository.new
+    space_repo = SpaceRepository.new
     @space = Space.new
 
     @space.name = params[:name]
     @space.description = params[:description]
     @space.price_per_night = params[:price_per_night]
 
-    repo.create(@space)
+    space_repo.create(@space)
     return erb(:space_confirmation)
   end
   

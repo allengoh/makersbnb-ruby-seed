@@ -53,6 +53,8 @@ describe Application do
       expect(response.body).to include('<input type="text" name="name">')
       expect(response.body).to include('<input type="text" name="description">')
       expect(response.body).to include('<input type="text" name="price_per_night">')
+      expect(response.body).to include('<input type="date" name="date_from" placeholder="date from">')
+      expect(response.body).to include('<input type="date" name="date_to" placeholder="date to">')
     end
   end
 
