@@ -63,7 +63,9 @@ describe Application do
       response = post('/spaces',
       name: 'Treehouse',
       description: 'Live for the night... up high',
-      price_per_night: '30'
+      price_per_night: '30',
+      date_from: '2022-10-01',
+      date_to: '2022-10-05'
       )
       expect(response.status).to eq(200)
       expect(response.body).to include("<h1>Your space was added!</h1>")
