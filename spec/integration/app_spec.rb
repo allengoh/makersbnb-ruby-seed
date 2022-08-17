@@ -88,7 +88,7 @@ describe Application do
       )
       expect(incorrect_password_entered).to eq false
       expect(response.status).to eq 200
-      expect(response.body).to include ('<a href= "/login">Please try log in again.</a>' )
+      expect(response.body).to include ('<h1>Your login was unsuccessful!</h1>' )
     end
   end
 
