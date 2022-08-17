@@ -2,8 +2,14 @@
   <head></head>
   <body>
     <h1>Welcome to MakersBNB!</h1>
-    <p>
-      <a href= "/signup/new">Sign up to MakersBNB now.</a>  
-    </p>    
+    <form method="POST" action="/login">
+    <label>Email address: </label>
+    <input type="text" name="email">
+    <br />
+    <label>Password: </label>
+    <input type="password" name="password">
+    <br />
+    <input type="submit" value="Login">
+    </form>
   </body>
 </html>

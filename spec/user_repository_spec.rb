@@ -13,16 +13,14 @@ RSpec.describe UserRepository do
     reset_seeds_table
   end
 
-
-  it "lists the users" do 
-
+  it "finds the user" do
     repo = UserRepository.new
+    email = "bob@gmail.com"
+    user = repo.find_by_email(email)
 
-    users = repo.all # list of users
-    expect(users.length).to eq(2)
-    expect(users[0].email).to eq('bob@gmail.com')
-    expect(users[1].password).to eq('password')
-
+    expect(user.email).to eq("bob@gmail.com")
+    expect(user.first_name).to eq("Bob")
+    expect(user.last_name).to eq("Billy")
   end
 
   it "creates an encrypted user account" do
@@ -30,15 +28,37 @@ RSpec.describe UserRepository do
 
     user = User.new
     user.email = "jane@yahoo.com"
-    user.password = "makers123"
     user.first_name = "Jane"
     user.last_name = "Doe"
 
+    allow(BCrypt::Password).to receive(:create).and_return("makers123")
     repo.create(user)
+    new_user = repo.find_by_email("jane@yahoo.com")
 
-    expect(repo.all.length).to eq(3)
-    expect(repo.all.last.first_name).to eq("Jane")
-    expect(repo.all.last.last_name).to eq("Doe")
+    expect(new_user.first_name).to eq("Jane")
+    expect(new_user.last_name).to eq("Doe")
+    expect(new_user.password).to eq("makers123")
   end
 
+  context "login a user" do
+    it 'returns false when given an incorrect password' do
+      email = "bob@gmail.com"
+      submitted_password = "INCORRECT_PASSWORD"
+
+      repo = UserRepository.new
+      result = repo.login(email, submitted_password)
+
+      expect(result).to eq false
+    end
+
+    it 'returns true when given the correct password' do
+      email = "bob@gmail.com"
+      submitted_password = "12345"
+
+      repo = UserRepository.new
+      result = repo.login(email, submitted_password)
+
+      expect(result).to eq true
+    end
+  end
 end
