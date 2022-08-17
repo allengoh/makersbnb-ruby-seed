@@ -18,10 +18,6 @@ describe Application do
 
   let(:app) { Application.new }
 
-  before(:each) do 
-    reset_makersbnb_table
-  end
-
   context "GET /spaces" do
     it "shows the list of all spaces" do
       response = get('/spaces')
