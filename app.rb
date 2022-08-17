@@ -52,6 +52,10 @@ class Application < Sinatra::Base
     return erb(:index)
   end
 
+  get "/login/new" do 
+    return erb(:login) 
+  end
+
   post "/login" do
     email = params[:email]
     password = params[:password]

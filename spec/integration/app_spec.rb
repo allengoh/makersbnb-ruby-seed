@@ -9,8 +9,6 @@ def reset_makersbnb_table
   connection.exec(seed_sql)
 end
   
-describe Application do
-  # This is so we can use rack-test helper methods.
 
 describe Application do
   before(:each) do 
@@ -79,6 +77,19 @@ describe Application do
       expect(response.status).to eq(302)
       expect(response.location).to include('/spaces')
     end
+
+    it 'redirects to error page if incorrect password entered' do
+      repo = UserRepository.new
+      incorrect_password_entered = repo.login('bob@gmail.com', '123456')
+      
+      response = post('/login', 
+      email: 'bob@gmail.com',
+      password: '123456'
+      )
+      expect(incorrect_password_entered).to eq false
+      expect(response.status).to eq 200
+      expect(response.body).to include ('<h1>Your login was unsuccessful!</h1>' )
+    end
   end
 
   context 'GET /signup/new' do
@@ -104,6 +115,18 @@ describe Application do
       expect(response.body).to include ("<h1>Your sign up was successful!</h1>")
     end
   end
-end
 
+  context "GET /login/new" do
+    
+    it "returns a form for logging in" do 
+
+      response = get("/login/new")
+
+      expect(response.status).to eq 200
+      expect(response.body).to include ("<input type=\"submit\" value=\"Log in now.\" />")
+
+    end
+  end
+
+end
 
