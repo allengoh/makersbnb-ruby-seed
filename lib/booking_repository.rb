@@ -29,4 +29,12 @@ class BookingRepository
     return nil
   end
 
+  def check_no_booking(id, date_from, date_to)
+    sql = 'SELECT * FROM bookings
+            WHERE id = $1 AND book_from >= $2 AND book_to <= $3;'
+    params = [id, date_from, date_to]
+    result = DatabaseConnection.exec_params(sql, params)
+    
+    return result.ntuples == 0 || result[0]['confirmed'] == 'f'
+  end
 end

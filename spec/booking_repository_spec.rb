@@ -41,4 +41,37 @@ RSpec.describe BookingRepository do
 
   end
   
+  context 'check no booking between a date range' do
+    it "returns true when date range outside of booking" do
+      repo = BookingRepository.new
+      expect(repo.check_no_booking(1,'2022-02-01','2022-04-01')).to eq(true)
+    end
+
+    it "returns true when there is an unconfirmed booking in the range" do
+      repo = BookingRepository.new
+      expect(repo.check_no_booking(1,'2022-08-15','2022-08-16')).to eq(true)
+    end
+
+    it "returns false when there is a confirmed booking in the date range" do
+      repo = BookingRepository.new
+      expect(repo.check_no_booking(2,'2022-08-16','2022-08-17')).to eq(false)
+    end
+
+    # Test cases:
+    #1 booking[0] (2022-02-01, 2022-04-01) => true
+    #2 booking[0] (2022-08-15, 2022-08-17) => false
+
+    # if confirmed = 'f'  return true
+
+    #3 booking[0] (2022-02-01, 2022-04-01) => true
+    #4 booking[0] (2022-08-15, 2022-08-17) => false
+
+    # Database:
+    # '2022-08-15','2022-08-16', 'f', 1
+    # '2022-08-16','2022-08-17', 't', 2
+
+    # Results:
+    # true => there is no bookings
+    # false => there is a booking
+  end
 end
