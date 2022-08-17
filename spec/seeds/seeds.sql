@@ -17,8 +17,12 @@ CREATE TABLE bookings (id SERIAL PRIMARY KEY, book_from DATE,book_to DATE, confi
 
 TRUNCATE TABLE users, spaces, bookings RESTART IDENTITY;
 
-INSERT INTO users (email, password, first_name, last_name) VALUES ('bob@gmail.com','12345','Bob','Billy');
-INSERT INTO users (email, password, first_name, last_name) VALUES ('Jill@gmail.com','password','Jane','Smith');
+INSERT INTO users (email, password, first_name, last_name) VALUES ('bob@gmail.com','$2a$12$iKnLslC.eb4.rLLfqvJ9fOjpcdh3xVsy8VRNwylmEE.saldj1eMCy','Bob','Billy');
+INSERT INTO users (email, password, first_name, last_name) VALUES ('Jill@gmail.com','$2a$12$w2N4ZKBBScqhiMCBKNjzWujkQvdMaCtfqtFLtvwoH6IZSKkcpajiu','Jane','Smith');
+
+--User passwords:
+-- Bob: 12345
+-- Jane: password
 
 INSERT INTO spaces (name, description, price_per_night, user_id) VALUES ('Luxurious Apartment with a Sea View', 'Newly-decorated modern apartment overlooking the sea. Two-minute walk to the beach!', '120.00', '1');
 INSERT INTO spaces (name, description, price_per_night, user_id) VALUES ('Cosy lake cabin', 'A beautiful cabin near the Lake District, completely remote and off the beaten track. Enjoy some great walks nearby!', '100', '2');

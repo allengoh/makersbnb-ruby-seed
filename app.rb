@@ -4,7 +4,6 @@ require_relative 'lib/database_connection'
 require_relative 'lib/space_repository'
 require_relative 'lib/user_repository'
 
-
 if ENV['ENV'] == 'test'
   database_name = 'makersbnb_test'
 else
@@ -17,7 +16,10 @@ class Application < Sinatra::Base
   configure :development do
     register Sinatra::Reloader
     also_reload 'lib/space_repository'
+    also_reload 'libe/user_repository'
   end
+  
+  enable :sessions
 
   get "/" do
     return erb(:index)
@@ -46,6 +48,25 @@ class Application < Sinatra::Base
     return erb(:space_confirmation)
   end
   
+  get "/" do
+    return erb(:index)
+  end
+
+  post "/login" do
+    email = params[:email]
+    password = params[:password]
+    
+    repo = UserRepository.new
+    user = repo.find_by_email(email)
+
+    if repo.login(email, password)
+      session[:user_id] = user.id
+      return redirect('/spaces')
+    else
+      return erb(:login_error)
+    end
+  end
+
   get "/signup/new" do 
     return erb(:signup)
   end
@@ -63,5 +84,6 @@ class Application < Sinatra::Base
 
     return erb(:signup_confirmation)
   end
+
 
 end

@@ -8,6 +8,9 @@ def reset_makersbnb_table
   connection = PG.connect({ host: '127.0.0.1', dbname: 'makersbnb_test' })
   connection.exec(seed_sql)
 end
+  
+describe Application do
+  # This is so we can use rack-test helper methods.
 
 describe Application do
   before(:each) do 
@@ -18,6 +21,10 @@ describe Application do
 
   let(:app) { Application.new }
 
+  before(:each) do 
+    reset_makersbnb_table
+  end
+
   context "GET /spaces" do
     it "shows the list of spaces" do
       response = get('/spaces')
@@ -27,7 +34,7 @@ describe Application do
   end
 
   context "GET /spaces/new" do
-    it "adds return a form to add a new space" do
+    xit "adds return a form to add a new space" do
       response = get('/spaces/new')
       expect(response.status).to eq(200)
       expect(response.body).to include('<form method="POST" action="/spaces">')
@@ -38,7 +45,7 @@ describe Application do
   end
 
   context "POST /spaces" do
-    it "adds a new space" do
+    xit "adds a new space" do
       response = post('/spaces',
       name: 'Treehouse',
       description: 'Live for the night... up high',
@@ -56,6 +63,21 @@ describe Application do
       expect(response.status).to eq 200
 
       expect(response.body).to include ("<h1>Welcome to MakersBNB!</h1>")
+      expect(response.body).to include('<form method="POST" action="/login">')
+      expect(response.body).to include('<input type="text" name="email">')
+      expect(response.body).to include('<input type="password" name="password">')
+    end
+  end
+
+  context 'POST /login' do
+    it 'returns spaces.erb if password matches' do
+      response = post('/login', 
+      email: 'bob@gmail.com',
+      password: '12345'
+      )
+
+      expect(response.status).to eq(302)
+      expect(response.location).to include('/spaces')
     end
   end
 
@@ -82,7 +104,6 @@ describe Application do
       expect(response.body).to include ("<h1>Your sign up was successful!</h1>")
     end
   end
-  
 end
 
 
