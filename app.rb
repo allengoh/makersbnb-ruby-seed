@@ -18,8 +18,12 @@ class Application < Sinatra::Base
     also_reload 'lib/space_repository'
     also_reload 'libe/user_repository'
   end
-
+  
   enable :sessions
+
+  get "/" do
+    return erb(:index)
+  end
 
   get '/spaces' do
     repo = SpaceRepository.new
@@ -34,15 +38,14 @@ class Application < Sinatra::Base
 
   post '/spaces' do
     repo = SpaceRepository.new
-    space = Space.new
+    @space = Space.new
 
-    space.name = params[:name]
-    space.description = params[:description]
-    space.price_per_night = params[:price_per_night]
+    @space.name = params[:name]
+    @space.description = params[:description]
+    @space.price_per_night = params[:price_per_night]
 
-    repo.create(space)
-
-    also_reload 'lib/user_repository'
+    repo.create(@space)
+    return erb(:space_confirmation)
   end
   
   get "/" do

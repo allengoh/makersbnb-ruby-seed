@@ -11,10 +11,14 @@ end
   
 describe Application do
   # This is so we can use rack-test helper methods.
+
+describe Application do
+  before(:each) do 
+    reset_makersbnb_table
+  end
+
   include Rack::Test::Methods
 
-  # We need to declare the `app` value by instantiating the Application
-  # class so our tests work.
   let(:app) { Application.new }
 
   before(:each) do 
@@ -24,10 +28,8 @@ describe Application do
   context "GET /spaces" do
     it "shows the list of spaces" do
       response = get('/spaces')
-
       expect(response.status).to eq(200)
       expect(response.body).to include("<div>Name: Luxurious Apartment with a Sea View</div>")
-    
     end
   end
 
@@ -35,7 +37,7 @@ describe Application do
     xit "adds return a form to add a new space" do
       response = get('/spaces/new')
       expect(response.status).to eq(200)
-      expect(response.body).to include('<form method="POST" action="/spaces/new">')
+      expect(response.body).to include('<form method="POST" action="/spaces">')
       expect(response.body).to include('<input type="text" name="name">')
       expect(response.body).to include('<input type="text" name="description">')
       expect(response.body).to include('<input type="text" name="price_per_night">')
@@ -49,9 +51,8 @@ describe Application do
       description: 'Live for the night... up high',
       price_per_night: '30'
       )
-
       expect(response.status).to eq(200)
-
+      expect(response.body).to include("<h1>Your space was added!</h1>")
     end
   end
 
