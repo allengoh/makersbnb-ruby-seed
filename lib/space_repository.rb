@@ -9,13 +9,7 @@ class SpaceRepository
     spaces = []
 
     result.each do |record|
-      space = Space.new
-      space.id = record['id'].to_i
-      space.name = record['name']
-      space.description = record['description']
-      space.price_per_night = record['price_per_night']
-      space.user_id = record['user_id'].to_i
-      spaces << space
+      spaces << make_space(record)
     end
 
     return spaces
@@ -27,7 +21,29 @@ class SpaceRepository
     result = DatabaseConnection.exec_params(sql, params)
     
   end
+
+  def find(id)
+    sql = 'SELECT * FROM spaces WHERE id = $1;'
+    params = [id]
+
+    record = DatabaseConnection.exec_params(sql,params)[0]
+    
+    return make_space(record)
+  end
+
+  def make_space(record)
+    space = Space.new
+    space.id = record['id'].to_i
+    space.name = record['name']
+    space.description = record['description']
+    space.price_per_night = record['price_per_night']
+    space.user_id = record['user_id'].to_i
+
+    return space
+  end
 end
+
+
 
 
 
