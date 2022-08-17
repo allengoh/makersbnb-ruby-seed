@@ -10,17 +10,28 @@ RSpec.describe SpaceRepository do
   before(:each) do 
     reset_table
   end
+  context "returns spaces" do
+    it 'returns all spaces' do
+      repo = SpaceRepository.new
+      spaces = repo.all
+      
+      expect(spaces.length).to eq 2
+      
+      expect(spaces.first.name).to eq 'Luxurious Apartment with a Sea View'
+      expect(spaces.first.description).to eq 'Newly-decorated modern apartment overlooking the sea. Two-minute walk to the beach!'
+      expect(spaces.first.price_per_night).to eq '120.00'
+      expect(spaces.first.user_id).to eq 1
+    end
 
-  it 'returns all spaces' do
-    repo = SpaceRepository.new
-    spaces = repo.all
-    
-    expect(spaces.length).to eq 2
-    
-    expect(spaces.first.name).to eq 'Luxurious Apartment with a Sea View'
-    expect(spaces.first.description).to eq 'Newly-decorated modern apartment overlooking the sea. Two-minute walk to the beach!'
-    expect(spaces.first.price_per_night).to eq '120.00'
-    expect(spaces.first.user_id).to eq 1
+    it "returns a space by id" do
+      repo = SpaceRepository.new
+      space = repo.find(1)
+
+      expect(space.name).to eq 'Luxurious Apartment with a Sea View'
+      expect(space.description).to eq 'Newly-decorated modern apartment overlooking the sea. Two-minute walk to the beach!'
+      expect(space.price_per_night).to eq '120.00'
+      expect(space.user_id).to eq 1
+    end
   end
 
   it 'create a new space' do

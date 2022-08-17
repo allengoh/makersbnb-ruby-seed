@@ -29,4 +29,13 @@ class BookingRepository
     return nil
   end
 
+  def check_dates(id, date_from, date_to)
+    
+    
+  end
+  # def
+  #   sql = 'SELECT * FROM Product_sales
+  #           WHERE From_date >= '2013-01-01' AND To_date <= '2013-01-20''
+
+
 end

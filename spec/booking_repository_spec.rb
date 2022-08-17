@@ -41,4 +41,26 @@ RSpec.describe BookingRepository do
 
   end
   
+  it "checks to see if there is a not a confirmed booking between a date range" do
+    
+    repo = BookingRepository.new
+    
+    expect(repo.check_dates(1,'2022-02-01','2022-04-01')).to eq(true)
+
+  end
+
+
+  #1 booking[0] (2022-02-01, 2022-04-01) => true
+  #2 booking[0] (2022-08-15, 2022-08-17) => false
+
+  # if confirmed = 'f'  return true
+
+  #3 booking[0] (2022-02-01, 2022-04-01) => true
+  #4 booking[0] (2022-08-15, 2022-08-17) => false
+
+  # '2022-08-15','2022-08-16', 'f', 1
+  # '2022-08-16','2022-08-17', 't', 2
+
+  # true => there is no bookings
+  # false => there is a booking
 end
