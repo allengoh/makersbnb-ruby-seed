@@ -1,15 +1,12 @@
 <html>
   <head></head>
   <body>
-    <h1> Spaces </h1>
+    <h1> Spaces</h1>
 
-    <form method="POST" action="/spaces/filtered">
-      <input type="date" name="date_from">
-      <input type="date" name="date_to">
-      <input type="submit" value="Filter"> 
-      </form>
+    <p>Date from: <%=@date_from%></p>
+    <p>Date to: <%=@date_to%></p>
 
-    <% @spaces.each do |space| %>
+    <% @filtered.each do |space| %>
       <div>Name: <%= space.name %></div>
       <div>Description: <%= space.description %></div>
       <div>Price per night: <%= space.price_per_night%></div>

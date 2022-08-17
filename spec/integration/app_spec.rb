@@ -19,8 +19,27 @@ describe Application do
   let(:app) { Application.new }
 
   context "GET /spaces" do
-    it "shows the list of spaces" do
+    it "shows the list of all spaces" do
       response = get('/spaces')
+      expect(response.status).to eq(200)
+      expect(response.body).to include("<div>Name: Luxurious Apartment with a Sea View</div>")
+      expect(response.body).to include("<div>Name: Cosy lake cabin</div>")
+      expect(response.body).to include('<form method="POST" action="/spaces/filtered">')
+      expect(response.body).to include('<input type="date" name="date_from">')
+      expect(response.body).to include('<input type="date" name="date_to">')
+    end
+  end
+
+  context "POST /spaces/filtered" do
+    it "shows the list of all spaces filtered by date range" do
+      response = post('/spaces/filtered', date_from: '2022-02-01', date_to: '2022-05-01')
+      expect(response.status).to eq(200)
+      expect(response.body).to include("<div>Name: Luxurious Apartment with a Sea View</div>")
+      expect(response.body).to include("<div>Name: Cosy lake cabin</div>")
+    end
+
+    it "shows one spaces filtered by date range" do
+      response = post('/spaces/filtered', date_from: '2022-08-15', date_to: '2022-08-17')
       expect(response.status).to eq(200)
       expect(response.body).to include("<div>Name: Luxurious Apartment with a Sea View</div>")
     end

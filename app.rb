@@ -3,6 +3,7 @@ require 'sinatra/reloader'
 require_relative 'lib/database_connection'
 require_relative 'lib/space_repository'
 require_relative 'lib/user_repository'
+require_relative 'lib/booking_repository'
 
 
 if ENV['ENV'] == 'test'
@@ -46,6 +47,23 @@ class Application < Sinatra::Base
     return erb(:space_confirmation)
   end
   
+  post '/spaces/filtered' do
+    @date_from = params[:date_from]
+    @date_to = params[:date_to]
+
+    booking_repo = BookingRepository.new  
+    space_repo = SpaceRepository.new
+    spaces = space_repo.all    
+
+    @filtered = []
+    spaces.each do |space|
+      is_not_booked = booking_repo.check_no_booking(space.id, @date_from, @date_to)
+      @filtered << space if is_not_booked
+    end
+    
+    return erb(:spaces_filtered)
+  end
+
   get "/signup/new" do 
     return erb(:signup)
   end
