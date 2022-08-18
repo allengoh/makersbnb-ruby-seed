@@ -100,6 +100,10 @@ describe Application do
 
   context 'POST /spaces/1/request' do
     it "adds a booking request" do
+      response = post('/login', 
+      email: 'bob@gmail.com',
+      password: '12345')
+      
       response = post('spaces/1/request',
         book_from: '2022-08-15',
         book_to: '2022-08-17'
