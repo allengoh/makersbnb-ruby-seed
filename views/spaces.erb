@@ -14,6 +14,8 @@
       <div>Name: <%= space.name %></div>
       <div>Description: <%= space.description %></div>
       <div>Price per night: <%= space.price_per_night%></div>
+
+      <a href='/spaces/<%= space.id %>'>View space.</a>
       <br>
     <% end %>
 
@@ -21,6 +23,7 @@
       <a href='/spaces/new'>List a new space</a>
     </div>
 
-      <a href= "/logout">Log out</a>  
+    <a href= "/logout">Log out.</a>  
+
   </body>
 </html>

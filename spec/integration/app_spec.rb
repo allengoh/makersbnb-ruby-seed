@@ -17,6 +17,19 @@ describe Application do
 
   let(:app) { Application.new }
 
+  context 'GET /' do
+    it 'returns 200 OK and HTML view of homepage' do
+      response = get('/')
+
+      expect(response.status).to eq(200)
+
+      expect(response.body).to include ("<h1>Welcome to MakersBNB!</h1>")
+      expect(response.body).to include('<form method="POST" action="/login">')
+      expect(response.body).to include('<input type="text" name="email" placeholder="Email address">')
+      expect(response.body).to include('<input type="password" name="password" placeholder="Password">')
+    end
+  end
+
   context "GET /spaces" do
     it "shows the list of all spaces" do
       response = get('/spaces')
@@ -72,16 +85,29 @@ describe Application do
     end
   end
 
-  context 'GET /' do
-    it 'returns 200 OK and HTML view of homepage' do
-      response = get('/')
+  context 'GET /spaces/1' do
+    it "returns HTML view of the space selected" do
+      response = get('spaces/1')
+      
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1>Luxurious Apartment with a Sea View</h1>')
+      expect(response.body).to include('Newly-decorated modern apartment overlooking the sea. Two-minute walk to the beach!')
+      expect(response.body).to include('120.00')
+      expect(response.body).to include('Select dates')
+      expect(response.body).to include('<input type="submit" value="Request a booking">')
+    end
+  end
 
-      expect(response.status).to eq 200
+  context 'POST /spaces/1/request' do
+    it "adds a booking request" do
+      response = post('spaces/1/request',
+        book_from: '2022-08-15',
+        book_to: '2022-08-17'
+      )
 
-      expect(response.body).to include ("<h1>Welcome to MakersBNB!</h1>")
-      expect(response.body).to include('<form method="POST" action="/login">')
-      expect(response.body).to include('<input type="text" name="email" placeholder="Email address">')
-      expect(response.body).to include('<input type="password" name="password" placeholder="Password">')
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1>Booking request sent</h1>')
+      
     end
   end
 
@@ -105,7 +131,7 @@ describe Application do
       password: '123456'
       )
       expect(incorrect_password_entered).to eq false
-      expect(response.status).to eq 200
+      expect(response.status).to eq(200)
       expect(response.body).to include ('<h1>Your login was unsuccessful!</h1>' )
     end
   end
@@ -123,7 +149,7 @@ describe Application do
     it 'returns 200 OK and form for user to sign up' do
       response = get('/signup/new')
 
-     expect(response.status).to eq 200
+     expect(response.status).to eq(200)
       expect(response.body).to include ("<h1>Fill in your details below to sign up</h1>")
    end
   end
@@ -136,7 +162,7 @@ describe Application do
       email: 'janedoe@email.com', 
       password: 'password123')
 
-      expect(response.status).to eq 200
+      expect(response.status).to eq (200)
       expect(response.body).to include ("<h1>Your sign up was successful!</h1>")
     end
   end
