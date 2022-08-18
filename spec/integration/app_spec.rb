@@ -192,6 +192,18 @@ describe Application do
       expect(response.body).to include ("<h3>Your spaces</h3>")
       expect(response.body).to include ("Luxurious Apartment with a Sea View")
     end
+
+    xit "returns a booking request when a guest made a booking" do
+      response = post('/login', 
+      email: 'Jill@gmail.com',
+      password: 'password')
+      response = get("/profile") 
+
+      expect(response.status).to eq 200
+      expect(response.body).to include ("<h3>Booking requests</h3>")
+      expect(response.body).to include ("Book from: 2022-08-16")
+      expect(response.body).to include ("Book to: 2022-08-17")
+    end
   end
 end
 

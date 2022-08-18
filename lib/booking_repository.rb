@@ -38,4 +38,22 @@ class BookingRepository
     
     return result.ntuples == 0 || result[0]['confirmed'] == 'f'
   end
+
+  def mark_confirmed(id)
+    sql = 'UPDATE bookings SET confirmed = \'t\' WHERE id = $1;'
+    params = [id]
+    DatabaseConnection.exec_params(sql, params)
+  end
+
+  def confirmed?(id)
+    sql = 'SELECT confirmed FROM bookings WHERE id = $1;'
+    params = [id]
+    p DatabaseConnection.exec_params(sql, params)[0]['confirmed']
+  end
+
+  def delete(id)
+    sql = 'DELETE FROM bookings WHERE id = $1;'
+    params = [id]
+    DatabaseConnection.exec_params(sql, params)
+  end
 end

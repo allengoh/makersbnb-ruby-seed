@@ -73,5 +73,27 @@ RSpec.describe BookingRepository do
     # Results:
     # true => there is no bookings
     # false => there is a booking
+
+    it "confirms a booking by turning the confirmed column to true" do
+      repo = BookingRepository.new
+      id = 1
+
+      # confirmed? is only for testing purposes
+      expect(repo.confirmed?(id)).to eq("f")
+      repo.mark_confirmed(id)
+      expect(repo.confirmed?(id)).to eq("t")
+    end
+
+    it "deletes a booking" do
+      repo = BookingRepository.new
+      repo.delete(1)
+
+      bookings = repo.all
+
+      expect(bookings.length).to eq 1
+      expect(bookings.last.book_from).to eq("2022-08-16")
+      expect(bookings.last.book_to).to eq("2022-08-17")
+      expect(bookings.last.confirmed).to eq("t")
+    end
   end
 end

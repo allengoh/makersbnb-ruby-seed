@@ -50,7 +50,7 @@ class Application < Sinatra::Base
     @booking.book_to = params[:book_to]
     @booking.confirmed = 'f'
     @booking.space_id = params['captures'].first
-    @booking.guest_id = session[:user_id].to_i
+    @booking.guest_id = session[:user_id]
 
     @booking_repo.create(@booking)
 
