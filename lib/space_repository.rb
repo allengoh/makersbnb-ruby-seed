@@ -20,6 +20,7 @@ class SpaceRepository
     params = [space.name, space.description, space.price_per_night, space.user_id]
     result = DatabaseConnection.exec_params(sql, params)
     
+    return result
   end
 
   def find(id)

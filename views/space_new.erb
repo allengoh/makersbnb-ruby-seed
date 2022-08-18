@@ -1,20 +1,30 @@
-<form method="POST" action="/spaces">
-<label> Name </label>
-<input type="text" name="name">
-  </div>
-  
-  <div>
-  <label> Description </label>
-  <input type="text" name="description">
-  </div>
+<html>
+  <body>
+    <form method="POST" action="/spaces">
+    <label> Name </label>
+    <input type="text" name="name">
+      </div>
+      
+      <div>
+        <label> Description </label>
+        <input type="text" name="description">
+      </div>
 
-  <div>
-  <label> Price per night </label>
-  <input type="text" name="price_per_night">
-  </div>
+      <div>
+        <label> Price per night </label>
+        <input type="text" name="price_per_night">
+      </div>
 
-  <input type="submit" value="Add space">
-    <div>
-      <a href='/spaces'>View spaces</a>
-    </div>
-</form>
+      <div>
+        <label> Space unavailable </label>
+        <input type="date" name="date_from" placeholder="date from">
+        <input type="date" name="date_to" placeholder="date to">
+      </div>
+
+      <input type="submit" value="Add space">
+        <div>
+          <a href='/spaces'>View spaces</a>
+        </div>
+    </form>
+  </body>
+</html>

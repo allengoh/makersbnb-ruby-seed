@@ -38,14 +38,22 @@ class Application < Sinatra::Base
   end
 
   post '/spaces' do
-    repo = SpaceRepository.new
+    booking_repo = BookingRepository.new
+    booking = Booking.new
+    space_repo = SpaceRepository.new
     @space = Space.new
 
     @space.name = params[:name]
     @space.description = params[:description]
     @space.price_per_night = params[:price_per_night]
+    booking.book_from = params[:date_from]
+    booking.book_to = params[:date_to]
+    booking.confirmed = 't'
 
-    repo.create(@space)
+    space_repo.create(@space)
+    booking.space_id = space_repo.all.last.id
+    booking_repo.create(booking)
+
     return erb(:space_confirmation)
   end
   

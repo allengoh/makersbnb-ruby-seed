@@ -53,6 +53,8 @@ describe Application do
       expect(response.body).to include('<input type="text" name="name">')
       expect(response.body).to include('<input type="text" name="description">')
       expect(response.body).to include('<input type="text" name="price_per_night">')
+      expect(response.body).to include('<input type="date" name="date_from" placeholder="date from">')
+      expect(response.body).to include('<input type="date" name="date_to" placeholder="date to">')
     end
   end
 
@@ -61,7 +63,9 @@ describe Application do
       response = post('/spaces',
       name: 'Treehouse',
       description: 'Live for the night... up high',
-      price_per_night: '30'
+      price_per_night: '30',
+      date_from: '2022-10-01',
+      date_to: '2022-10-05'
       )
       expect(response.status).to eq(200)
       expect(response.body).to include("<h1>Your space was added!</h1>")
