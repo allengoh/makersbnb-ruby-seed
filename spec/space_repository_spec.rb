@@ -25,6 +25,16 @@ RSpec.describe SpaceRepository do
 
     it "returns a space by id" do
       repo = SpaceRepository.new
+      space = repo.find(1)
+
+      expect(space.name).to eq 'Luxurious Apartment with a Sea View'
+      expect(space.description).to eq 'Newly-decorated modern apartment overlooking the sea. Two-minute walk to the beach!'
+      expect(space.price_per_night).to eq '120.00'
+      expect(space.user_id).to eq 1
+    end
+
+    it "returns a space by user id" do
+      repo = SpaceRepository.new
       space = repo.find_user_spaces(1)
 
       expect(space.first.name).to eq 'Luxurious Apartment with a Sea View'

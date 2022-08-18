@@ -52,7 +52,7 @@ class Application < Sinatra::Base
     @booking.space_id = params['captures'].first
     @booking.guest_id = session[:user_id]
 
-    p @booking
+    @booking
     @booking_repo.create(@booking)
 
     return erb(:space_request)
