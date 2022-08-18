@@ -124,13 +124,13 @@ class Application < Sinatra::Base
   get '/profile' do
     space_repo = SpaceRepository.new
     user_repo = UserRepository.new
-    id = session[:user_id]
+    user_id = session[:user_id]
 
-    if id == nil
+    if user_id == nil
       return redirect('/')
     else
-      @spaces = space_repo.find(id)
-      @name = user_repo.find_by_id(id)
+      @spaces = space_repo.find_user_spaces(user_id)
+      @name = user_repo.find_by_id(user_id)
       return erb(:profile)
     end
   end
