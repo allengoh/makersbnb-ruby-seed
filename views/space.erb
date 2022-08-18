@@ -5,6 +5,15 @@
     <div>
       <%= @space.description %>
     </div>
+
     <div><%= @space.price_per_night %></div>
+      <div>Select dates</div>
+    
+      <form method="POST" action="/spaces/<%=@space.id %>/request">
+      <input type="date" name="book_from">
+      <input type="date" name="book_to">
+      <input type="submit" value="Request a booking">
+    </form>
+
   </body>
 </html>

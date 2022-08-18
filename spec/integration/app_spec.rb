@@ -85,7 +85,7 @@ describe Application do
     end
   end
 
-  context 'GET spaces/1' do
+  context 'GET /spaces/1' do
     it "returns HTML view of the space selected" do
       response = get('spaces/1')
       
@@ -93,6 +93,21 @@ describe Application do
       expect(response.body).to include('<h1>Luxurious Apartment with a Sea View</h1>')
       expect(response.body).to include('Newly-decorated modern apartment overlooking the sea. Two-minute walk to the beach!')
       expect(response.body).to include('120.00')
+      expect(response.body).to include('Select dates')
+      expect(response.body).to include('<input type="submit" value="Request a booking">')
+    end
+  end
+
+  context 'POST /spaces/1/request' do
+    it "adds a booking request" do
+      response = post('spaces/1/request',
+        book_from: '2022-08-15',
+        book_to: '2022-08-17'
+      )
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1>Booking request sent</h1>')
+      
     end
   end
 

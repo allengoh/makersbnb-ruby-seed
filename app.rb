@@ -34,11 +34,28 @@ class Application < Sinatra::Base
   end
 
   get /\/spaces\/([0-9]+)/ do
-    repo = SpaceRepository.new
+    space_repo = SpaceRepository.new
 
-    @space = repo.find(params['captures'].first)
+    @space = space_repo.find(params['captures'].first)
 
     return erb(:space)
+  end
+
+  post /\/spaces\/([0-9]+)\/request/ do
+    
+    @booking_repo = BookingRepository.new
+
+    @booking = Booking.new
+    @booking.book_from = params[:book_from]
+    @booking.book_to = params[:book_to]
+    @booking.confirmed = 'f'
+    @booking.space_id = params['captures'].first
+    @booking.guest_id = session[:user_id]
+
+    p @booking
+    @booking_repo.create(@booking)
+
+    return erb(:space_request)
   end
 
   get '/spaces/new' do
