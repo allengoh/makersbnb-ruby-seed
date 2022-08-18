@@ -115,7 +115,7 @@ describe Application do
       response = get('/logout')
 
       expect(response.status).to eq 200
-      expect(response.body).to include ('<h1>You just log out! Redirecting to homepage in 3 seconds.</h1>')
+      expect(response.body).to include ('<h1>You just log out! Redirecting to login page in 3 seconds.</h1>')
     end
   end
 
