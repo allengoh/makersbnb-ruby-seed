@@ -1,31 +1,32 @@
 DROP TABLE IF EXISTS users, spaces, bookings;
 
-CREATE TABLE users (id SERIAL PRIMARY KEY, email text, password text, first_name text, last_name text );
+CREATE TABLE users (id SERIAL PRIMARY KEY, email text, password text, first_name text, last_name text);
 
-CREATE TABLE spaces (
-  id SERIAL PRIMARY KEY,
-  name text,
-  description text,
-  price_per_night decimal(5,2),
-  user_id int,
+CREATE TABLE spaces (id SERIAL PRIMARY KEY, name text, description text, price_per_night decimal(5,2),
+user_id int,
   constraint fk_user foreign key(user_id)
     references users(id)
     on delete cascade
 );
 
-CREATE TABLE bookings (id SERIAL PRIMARY KEY, book_from DATE,book_to DATE, confirmed BOOLEAN, space_id int);
+CREATE TABLE bookings (id SERIAL PRIMARY KEY, book_from DATE, book_to DATE, confirmed BOOLEAN, 
+space_id int, guest_id int,
+  constraint fk_space foreign key(space_id)
+    references spaces(id)
+    on delete cascade,
+
+  constraint fk_user foreign key(guest_id)
+    references users(id)
+    on delete cascade
+);
 
 TRUNCATE TABLE users, spaces, bookings RESTART IDENTITY;
 
 INSERT INTO users (email, password, first_name, last_name) VALUES ('bob@gmail.com','$2a$12$iKnLslC.eb4.rLLfqvJ9fOjpcdh3xVsy8VRNwylmEE.saldj1eMCy','Bob','Billy');
 INSERT INTO users (email, password, first_name, last_name) VALUES ('Jill@gmail.com','$2a$12$w2N4ZKBBScqhiMCBKNjzWujkQvdMaCtfqtFLtvwoH6IZSKkcpajiu','Jane','Smith');
 
---User passwords:
--- Bob: 12345
--- Jane: password
-
 INSERT INTO spaces (name, description, price_per_night, user_id) VALUES ('Luxurious Apartment with a Sea View', 'Newly-decorated modern apartment overlooking the sea. Two-minute walk to the beach!', '120.00', '1');
 INSERT INTO spaces (name, description, price_per_night, user_id) VALUES ('Cosy lake cabin', 'A beautiful cabin near the Lake District, completely remote and off the beaten track. Enjoy some great walks nearby!', '100', '2');
 
-INSERT INTO bookings (book_from, book_to, confirmed, space_id) VALUES('2022-08-15','2022-08-16', 'f', 1);
-INSERT INTO bookings (book_from, book_to, confirmed, space_id) VALUES('2022-08-16','2022-08-17', 't', 2);
+INSERT INTO bookings (book_from, book_to, confirmed, space_id, guest_id) VALUES('2022-08-15','2022-08-16', 'f', '1', '1');
+INSERT INTO bookings (book_from, book_to, confirmed, space_id, guest_id) VALUES('2022-08-16','2022-08-17', 't', '2', '2');

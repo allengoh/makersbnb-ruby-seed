@@ -13,7 +13,8 @@
       <div>Name: <%= space.name %></div>
       <div>Description: <%= space.description %></div>
       <div>Price per night: <%= space.price_per_night%></div>
-      <br />
+      <a href='/spaces/<%= space.id %>'>View space.</a>
+      <br></br>
     <% end %>
 
     <div>
@@ -21,9 +22,7 @@
     </div>
 
     <div>
-      <a href='/'>Return to homepage.</a>
     </div>
-    <a href= "/signup/new">Sign up to MakersBNB now.</a>  
     <a href= "/logout">Log out.</a>  
   </body>
 </html>

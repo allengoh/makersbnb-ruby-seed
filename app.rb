@@ -33,6 +33,14 @@ class Application < Sinatra::Base
     return erb(:spaces)
   end
 
+  get /\/spaces\/([0-9]+)/ do
+    repo = SpaceRepository.new
+
+    @space = repo.find(params['captures'].first)
+
+    return erb(:space)
+  end
+
   get '/spaces/new' do
     return erb(:space_new)
   end

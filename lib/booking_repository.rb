@@ -14,6 +14,7 @@ class BookingRepository
       booking.book_to = record['book_to']
       booking.confirmed = record['confirmed']
       booking.space_id = record['space_id']
+      booking.guest_id = record['guest_id']
 
       bookings << booking
     end
@@ -21,8 +22,8 @@ class BookingRepository
   end
 
   def create(booking)
-    sql = 'INSERT INTO bookings (book_from, book_to, confirmed, space_id) VALUES ($1, $2, $3, $4);'
-    sql_params = [booking.book_from,booking.book_to, booking.confirmed, booking.space_id]
+    sql = 'INSERT INTO bookings (book_from, book_to, confirmed, space_id, guest_id) VALUES ($1, $2, $3, $4, $5);'
+    sql_params = [booking.book_from,booking.book_to, booking.confirmed, booking.space_id, booking.guest_id]
 
     DatabaseConnection.exec_params(sql, sql_params)
 
