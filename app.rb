@@ -123,8 +123,10 @@ class Application < Sinatra::Base
 
   get '/profile' do
     space_repo = SpaceRepository.new
+    user_repo = UserRepository.new
     id = session[:user_id]
     @spaces = space_repo.find(id)
+    @name = user_repo.find_by_id(id)
 
     return erb(:profile)
   end

@@ -1,6 +1,7 @@
 <html>
   <body>
-    <h2>Your spaces</h2>
+    <h2>Hi <%= @name.first_name %>!</h2>  
+    <h3>Your spaces</h3>
     <% @spaces.each do |space| %>
       <%= space.name %>
     <% end %>
