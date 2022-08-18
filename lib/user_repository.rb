@@ -23,20 +23,28 @@ class UserRepository
   end
 
   def find_by_email(email)
-    sql = 'SELECT * FROM users WHERE email = $1'
+    sql = 'SELECT * FROM users WHERE email = $1;'
     params = [email]
-    result = DatabaseConnection.exec_params(sql, params)
+    result = DatabaseConnection.exec_params(sql, params)[0]
 
+    return make_user(result)
+  end
+
+  def find_by_id(id)
+    sql = 'SELECT * FROM users WHERE id = $1;'
+    params = [id]
+    result = DatabaseConnection.exec_params(sql, params)[0]
+
+    return make_user(result)
+  end
+
+  def make_user(record)
     user = User.new
-
-    result.each do |record|
-      user.id = record['id']
-      user.email = record['email']
-      user.password = record['password']
-      user.first_name = record['first_name']
-      user.last_name = record['last_name']
-    end
-
+    user.id = record['id']
+    user.email = record['email']
+    user.password = record['password']
+    user.first_name = record['first_name']
+    user.last_name = record['last_name']
     return user
   end
 end
