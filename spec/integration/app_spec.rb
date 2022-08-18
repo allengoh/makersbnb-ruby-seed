@@ -13,7 +13,6 @@ describe Application do
   before(:each) do 
     reset_makersbnb_table
   end
-
   include Rack::Test::Methods
 
   let(:app) { Application.new }
@@ -22,6 +21,7 @@ describe Application do
     it "shows the list of all spaces" do
       response = get('/spaces')
       expect(response.status).to eq(200)
+      expect(response.body).to include("<h3><a href =\"/profile\">Your profile page</a></h3>")
       expect(response.body).to include("<div>Name: Luxurious Apartment with a Sea View</div>")
       expect(response.body).to include("<div>Name: Cosy lake cabin</div>")
       expect(response.body).to include('<form method="POST" action="/spaces/filtered">')

@@ -1,8 +1,9 @@
 <html>
   <head></head>
   <body>
-    <h1> Spaces </h1>
-
+    <h1> Welcome to MakersBNB! </h1>
+    <h3><a href ="/profile">Your profile page</a></h3>
+    <h2>Spaces</h2>
     <form method="POST" action="/spaces/filtered">
       <input type="date" name="date_from">
       <input type="date" name="date_to">
@@ -13,7 +14,7 @@
       <div>Name: <%= space.name %></div>
       <div>Description: <%= space.description %></div>
       <div>Price per night: <%= space.price_per_night%></div>
-      <br />
+      <br>
     <% end %>
 
     <div>
