@@ -13,7 +13,6 @@ describe Application do
   before(:each) do 
     reset_makersbnb_table
   end
-
   include Rack::Test::Methods
 
   let(:app) { Application.new }
@@ -35,6 +34,7 @@ describe Application do
     it "shows the list of all spaces" do
       response = get('/spaces')
       expect(response.status).to eq(200)
+      expect(response.body).to include("<h3><a href =\"/profile\">Your profile page</a></h3>")
       expect(response.body).to include("<div>Name: Luxurious Apartment with a Sea View</div>")
       expect(response.body).to include("<div>Name: Cosy lake cabin</div>")
       expect(response.body).to include('<form method="POST" action="/spaces/filtered">')
@@ -140,8 +140,8 @@ describe Application do
     it 'logs out the user (ends current session)' do
       response = get('/logout')
 
-      expect(response.status).to eq(200)
-      expect(response.body).to include ('<h1>You just log out! Redirecting to homepage in 3 seconds.</h1>')
+      expect(response.status).to eq 200
+      expect(response.body).to include ('<h1>You just log out! Redirecting to login page in 3 seconds.</h1>')
     end
   end
 
@@ -173,6 +173,20 @@ describe Application do
 
       expect(response.status).to eq 200
       expect(response.body).to include ("<input type=\"submit\" value=\"Log in now.\" />")
+    end
+  end
+
+  context "GET /profile" do
+    it "returns the profile page as a logged in user" do
+      response = post('/login', 
+      email: 'bob@gmail.com',
+      password: '12345')
+      response = get("/profile")      
+
+      expect(response.status).to eq 200
+      expect(response.body).to include ("<h2>Hi Bob!</h2>")
+      expect(response.body).to include ("<h3>Your spaces</h3>")
+      expect(response.body).to include ("Luxurious Apartment with a Sea View")
     end
   end
 end

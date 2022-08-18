@@ -104,10 +104,6 @@ class Application < Sinatra::Base
     return erb(:signup)
   end
 
-  get "/" do
-    return erb(:index)
-  end
-
   get "/login/new" do 
     return erb(:login) 
   end
@@ -120,7 +116,7 @@ class Application < Sinatra::Base
     user = repo.find_by_email(email)
 
     if repo.login(email, password)
-      session[:user_id] = user.id
+      session[:user_id] = user.id.to_i
       return redirect('/spaces')
     else
       return erb(:login_error)
@@ -148,5 +144,19 @@ class Application < Sinatra::Base
     repo.create(user)
 
     return erb(:signup_confirmation)
+  end
+
+  get '/profile' do
+    space_repo = SpaceRepository.new
+    user_repo = UserRepository.new
+    user_id = session[:user_id]
+
+    if user_id == nil
+      return redirect('/')
+    else
+      @spaces = space_repo.find_user_spaces(user_id)
+      @name = user_repo.find_by_id(user_id)
+      return erb(:profile)
+    end
   end
 end

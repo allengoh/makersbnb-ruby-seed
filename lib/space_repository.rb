@@ -23,13 +23,18 @@ class SpaceRepository
     return result
   end
 
-  def find(id)
-    sql = 'SELECT * FROM spaces WHERE id = $1;'
-    params = [id]
-
-    record = DatabaseConnection.exec_params(sql,params)[0]
+  def find_user_spaces(user_id)
+    sql = 'SELECT * FROM spaces WHERE user_id = $1;'
+    params = [user_id]
+    result = DatabaseConnection.exec_params(sql,params)
     
-    return make_space(record)
+    spaces = []
+
+    result.each do |record|
+      spaces << make_space(record)
+    end
+
+    return spaces
   end
 
   def make_space(record)

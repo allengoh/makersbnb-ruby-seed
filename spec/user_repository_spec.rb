@@ -12,15 +12,27 @@ RSpec.describe UserRepository do
   before(:each) do 
     reset_seeds_table
   end
+  
+  context "finds the user" do 
+    it "returns the user by email" do
+      repo = UserRepository.new
+      email = "bob@gmail.com"
+      user = repo.find_by_email(email)
 
-  it "finds the user" do
-    repo = UserRepository.new
-    email = "bob@gmail.com"
-    user = repo.find_by_email(email)
+      expect(user.email).to eq("bob@gmail.com")
+      expect(user.first_name).to eq("Bob")
+      expect(user.last_name).to eq("Billy")
+    end
 
-    expect(user.email).to eq("bob@gmail.com")
-    expect(user.first_name).to eq("Bob")
-    expect(user.last_name).to eq("Billy")
+    it "returns the user by id" do
+      repo = UserRepository.new
+      id = 1
+      user = repo.find_by_id(id)
+       
+      expect(user.email).to eq("bob@gmail.com")
+      expect(user.first_name).to eq("Bob")
+      expect(user.last_name).to eq("Billy")
+    end
   end
 
   it "creates an encrypted user account" do
