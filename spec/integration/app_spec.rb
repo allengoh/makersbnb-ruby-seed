@@ -149,5 +149,18 @@ describe Application do
       expect(response.body).to include ("<input type=\"submit\" value=\"Log in now.\" />")
     end
   end
+
+  context "GET /profile" do
+    it "returns the profile page as a logged in user" do
+      response = post('/login', 
+      email: 'bob@gmail.com',
+      password: '12345')
+      response = get("/profile")      
+
+      expect(response.status).to eq 200
+      expect(response.body).to include ("<h2>Your spaces</h2>")
+      expect(response.body).to include ("Luxurious Apartment with a Sea View")
+    end
+  end
 end
 
