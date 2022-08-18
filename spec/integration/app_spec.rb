@@ -54,7 +54,7 @@ describe Application do
     it "shows one spaces filtered by date range" do
       response = post('/spaces/filtered', date_from: '2022-08-15', date_to: '2022-08-17')
       expect(response.status).to eq(200)
-      expect(response.body).to include("<div>Name: Luxurious Apartment with a Sea View</div>")
+      expect(response.body).to include("<div>Name: Cosy lake cabin</div>")
     end
   end
 
@@ -191,6 +191,7 @@ describe Application do
       expect(response.body).to include ("<h2>Hi Bob!</h2>")
       expect(response.body).to include ("<h3>Your spaces</h3>")
       expect(response.body).to include ("Luxurious Apartment with a Sea View")
+
     end
   end
 end

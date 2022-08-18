@@ -146,15 +146,28 @@ class Application < Sinatra::Base
   end
 
   get '/profile' do
-    space_repo = SpaceRepository.new
+    @space_repo = SpaceRepository.new
     user_repo = UserRepository.new
+    booking_repo = BookingRepository.new
     user_id = session[:user_id]
 
     if user_id == nil
       return redirect('/')
     else
-      @spaces = space_repo.find_user_spaces(user_id)
+      @spaces = @space_repo.find_user_spaces(user_id)
       @name = user_repo.find_by_id(user_id)
+      @bookings = booking_repo.find_guest_bookings(user_id)
+
+      my_bookings = []
+
+      @bookings.each do |booking|
+        space_id = booking.space_id
+        space = @space_repo.find(space_id)
+        if user_id != space.user_id
+          my_bookings << space 
+        end
+      end 
+        p my_bookings
       return erb(:profile)
     end
   end
