@@ -8,17 +8,10 @@ class BookingRepository
 
     bookings = []
     results.each do |record|
-      booking = Booking.new
-      booking.id = record['id']
-      booking.book_from = record['book_from']
-      booking.book_to = record['book_to']
-      booking.confirmed = record['confirmed']
-      booking.space_id = record['space_id']
-      booking.guest_id = record['guest_id']
-
+      booking = make_booking(record)
       bookings << booking
     end
-    bookings
+    return bookings
   end
 
   def create(booking)
@@ -28,6 +21,18 @@ class BookingRepository
     DatabaseConnection.exec_params(sql, sql_params)
 
     return nil
+  end
+
+  def find_guest_bookings(guest_id)
+    sql = 'SELECT * FROM bookings WHERE guest_id = $1'
+    results = DatabaseConnection.exec_params(sql, [guest_id])
+
+    bookings = []
+    results.each do |record|
+      booking = make_booking(record)
+      bookings << booking
+    end
+    return bookings
   end
 
   def check_no_booking(id, date_from, date_to)
@@ -56,4 +61,16 @@ class BookingRepository
     params = [id]
     DatabaseConnection.exec_params(sql, params)
   end
+
+  private
+    def make_booking(record)
+      booking = Booking.new
+      booking.id = record['id']
+      booking.book_from = record['book_from']
+      booking.book_to = record['book_to']
+      booking.confirmed = record['confirmed']
+      booking.space_id = record['space_id']
+      booking.guest_id = record['guest_id']
+      return booking
+    end
 end

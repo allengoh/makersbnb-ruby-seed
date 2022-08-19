@@ -5,6 +5,13 @@
     <% @spaces.each do |space| %>
       <%= space.name %>
     <% end %>
+    <h3>Your booking requests</h3>
+
+    <% @bookings.each do |booking| %>
+      <% space_id = booking.space_id %>
+      <%= @space_repo.find(space_id).name %>
+
+      <% end %>
     <br><br>
     <h3>Booked spaces</h3>
     <a href= "/spaces">Return to homepage</a>
