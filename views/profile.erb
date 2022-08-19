@@ -5,15 +5,18 @@
     <% @spaces.each do |space| %>
       <%= space.name %>
     <% end %>
-    <h3>Your booking requests</h3>
+    <h3>Your bookings</h3>
 
-    <% @bookings.each do |booking| %>
-      <% space_id = booking.space_id %>
-      <%= @space_repo.find(space_id).name %>
+   <div><% @confirmed_spaces.each_with_index do |space, index| %>
+      <%=index + 1%>. - <a href="/spaces/<%=space.id%>"> <%= space.name %></a>
+      <br><br>
+      <% end %></div>
 
-      <% end %>
-    <br><br>
-    <h3>Booked spaces</h3>
+   <div><% @confirmed_bookings.each_with_index do |booking, index| %>
+      <%=index + 1%>. - <%= booking.book_from %> to <%= booking.book_to %>
+      <br><br>
+      <% end %></div>
+    
     <a href= "/spaces">Return to homepage</a>
     <br>
     <a href= "/logout">Log out</a> 

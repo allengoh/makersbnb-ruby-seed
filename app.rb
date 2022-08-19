@@ -156,15 +156,20 @@ class Application < Sinatra::Base
     else
       @spaces = @space_repo.find_user_spaces(user_id)
       @name = user_repo.find_by_id(user_id)
-      @bookings = booking_repo.find_guest_bookings(user_id)
+      bookings = booking_repo.find_guest_bookings(user_id)
 
-      my_bookings = []
+      @confirmed_bookings = []
+      @confirmed_spaces = []
 
-      @bookings.each do |booking|
+      bookings.each do |booking|
+
+        #to find out information about the space we get the space too
         space_id = booking.space_id
         space = @space_repo.find(space_id)
-        if user_id != space.user_id
-          my_bookings << space 
+
+        if booking.confirmed == 't' && user_id != space.user_id
+          @confirmed_spaces << space
+          @confirmed_bookings << booking
         end
       end
       

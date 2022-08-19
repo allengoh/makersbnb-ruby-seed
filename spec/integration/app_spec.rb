@@ -194,6 +194,17 @@ describe Application do
 
     end
 
+    it "returns all confirmed bookings for the guest id that is the current user" do
+      response = post('/login', 
+        email: 'bob@gmail.com',
+        password: '12345')
+        response = get("/profile")
+
+        expect(response.status).to eq 200
+        expect(response.body).to include ('1. - <a href="/spaces/2"> Cosy lake cabin')
+        expect(response.body).to include ('1. - 2022-12-22 to 2022-12-28')
+    end
+
     xit "returns a booking request when a guest made a booking" do
       response = post('/login', 
       email: 'Jill@gmail.com',
