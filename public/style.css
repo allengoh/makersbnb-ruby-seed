@@ -1,5 +1,5 @@
 html {
-  background-color: rgb(193, 213, 224);
+  background-color: rgb(211, 232, 244);
 }
 
 h1 {
@@ -7,11 +7,23 @@ h1 {
   font-size: 40;
 }
 
+h2 {
+  font-family: Helvetica;
+  font-size: 20;
+}
+
 p {
   font-family: Helvetica;
   font-size: 15;
   color: black;
 }
+
+a {
+  font-family: Helvetica;
+  font-size: 15;
+  color: blue
+}
+
 
 section {
   text-align: center;
