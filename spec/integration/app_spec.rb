@@ -153,8 +153,8 @@ describe Application do
     it 'returns 200 OK and form for user to sign up' do
       response = get('/signup/new')
 
-     expect(response.status).to eq(200)
-      expect(response.body).to include ("<h1>Fill in your details below to sign up</h1>")
+      expect(response.status).to eq(200)
+      expect(response.body).to include ("<h2>Fill in your details below to sign up</h2>")
    end
   end
 
