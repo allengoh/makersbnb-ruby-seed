@@ -25,9 +25,13 @@ class UserRepository
   def find_by_email(email)
     sql = 'SELECT * FROM users WHERE email = $1;'
     params = [email]
-    result = DatabaseConnection.exec_params(sql, params)[0]
+    result = DatabaseConnection.exec_params(sql, params)
 
-    return make_user(result)
+    if result.ntuples == 0
+      return nil
+    else
+      return make_user(result[0])
+    end
   end
 
   def find_by_id(id)

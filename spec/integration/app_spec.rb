@@ -23,7 +23,7 @@ describe Application do
 
       expect(response.status).to eq(200)
 
-      expect(response.body).to include ("<h1>Welcome to MakersBNB!</h1>")
+      expect(response.body).to include ("<h1>MakersBNB</h1>")
       expect(response.body).to include('<form method="POST" action="/login">')
       expect(response.body).to include('<input type="text" name="email" placeholder="Email address">')
       expect(response.body).to include('<input type="password" name="password" placeholder="Password">')
@@ -34,9 +34,9 @@ describe Application do
     it "shows the list of all spaces" do
       response = get('/spaces')
       expect(response.status).to eq(200)
-      expect(response.body).to include("<h3><a href =\"/profile\">Your profile page</a></h3>")
-      expect(response.body).to include("<div>Name: Luxurious Apartment with a Sea View</div>")
-      expect(response.body).to include("<div>Name: Cosy lake cabin</div>")
+      expect(response.body).to include("Your profile page")
+      expect(response.body).to include("Name: Luxurious Apartment with a Sea View")
+      expect(response.body).to include("Name: Cosy lake cabin")
       expect(response.body).to include('<form method="POST" action="/spaces/filtered">')
       expect(response.body).to include('<input type="date" name="date_from">')
       expect(response.body).to include('<input type="date" name="date_to">')
@@ -63,11 +63,9 @@ describe Application do
       response = get('/spaces/new')
       expect(response.status).to eq(200)
       expect(response.body).to include('<form method="POST" action="/spaces">')
-      expect(response.body).to include('<input type="text" name="name">')
-      expect(response.body).to include('<input type="text" name="description">')
-      expect(response.body).to include('<input type="text" name="price_per_night">')
-      expect(response.body).to include('<input type="date" name="date_from" placeholder="date from">')
-      expect(response.body).to include('<input type="date" name="date_to" placeholder="date to">')
+      expect(response.body).to include('<input type="text" name="name" placeholder="Name of space">')
+      expect(response.body).to include('<input type="text" name="description" placeholder="Description">')
+      expect(response.body).to include('<input type="text" name="price_per_night" placeholder="Price per night (GBP)">')
     end
   end
 
@@ -90,7 +88,7 @@ describe Application do
       response = get('spaces/1')
       
       expect(response.status).to eq(200)
-      expect(response.body).to include('<h1>Luxurious Apartment with a Sea View</h1>')
+      expect(response.body).to include('Luxurious Apartment with a Sea View')
       expect(response.body).to include('Newly-decorated modern apartment overlooking the sea. Two-minute walk to the beach!')
       expect(response.body).to include('120.00')
       expect(response.body).to include('Select dates')
@@ -110,7 +108,7 @@ describe Application do
       )
 
       expect(response.status).to eq(200)
-      expect(response.body).to include('<h1>Booking request sent</h1>')
+      expect(response.body).to include('Booking request sent')
       
     end
   end
@@ -153,8 +151,8 @@ describe Application do
     it 'returns 200 OK and form for user to sign up' do
       response = get('/signup/new')
 
-     expect(response.status).to eq(200)
-      expect(response.body).to include ("<h1>Fill in your details below to sign up</h1>")
+      expect(response.status).to eq(200)
+      expect(response.body).to include ("<h2>Fill in your details below to sign up</h2>")
    end
   end
 
@@ -188,10 +186,9 @@ describe Application do
       response = get("/profile")      
 
       expect(response.status).to eq 200
-      expect(response.body).to include ("<h2>Hi Bob!</h2>")
+      expect(response.body).to include ("Hi Bob!")
       expect(response.body).to include ("<h3>Your spaces</h3>")
       expect(response.body).to include ("Luxurious Apartment with a Sea View")
-
     end
 
     it "returns all confirmed bookings for the guest id that is the current user" do
