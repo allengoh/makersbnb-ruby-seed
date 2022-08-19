@@ -53,7 +53,7 @@ class BookingRepository
   def confirmed?(id)
     sql = 'SELECT confirmed FROM bookings WHERE id = $1;'
     params = [id]
-    p DatabaseConnection.exec_params(sql, params)[0]['confirmed']
+    DatabaseConnection.exec_params(sql, params)[0]['confirmed']
   end
 
   def delete(id)

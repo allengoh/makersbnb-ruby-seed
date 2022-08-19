@@ -82,7 +82,7 @@ RSpec.describe BookingRepository do
 
     it "confirms a booking by turning the confirmed column to true" do
       repo = BookingRepository.new
-      id = 1
+      id = 4
 
       # confirmed? is only for testing purposes
       expect(repo.confirmed?(id)).to eq("f")
@@ -96,9 +96,9 @@ RSpec.describe BookingRepository do
 
       bookings = repo.all
 
-      expect(bookings.length).to eq 1
-      expect(bookings.last.book_from).to eq("2022-08-16")
-      expect(bookings.last.book_to).to eq("2022-08-17")
+      expect(bookings.length).to eq 4
+      expect(bookings.last.book_from).to eq("2022-12-22")
+      expect(bookings.last.book_to).to eq("2022-12-28")
       expect(bookings.last.confirmed).to eq("t")
     end
   end
