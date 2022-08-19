@@ -166,8 +166,8 @@ class Application < Sinatra::Base
         if user_id != space.user_id
           my_bookings << space 
         end
-      end 
-        p my_bookings
+      end
+      
       return erb(:profile)
     end
   end
