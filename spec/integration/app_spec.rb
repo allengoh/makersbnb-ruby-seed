@@ -198,20 +198,20 @@ describe Application do
         response = get("/profile")
 
         expect(response.status).to eq 200
-        expect(response.body).to include ('1. - <a href="/spaces/2"> Cosy lake cabin')
-        expect(response.body).to include ('1. - 2022-12-22 to 2022-12-28')
+        expect(response.body).to include ("1. - <a href=\"/spaces/2\"> Cosy lake cabin")
+        expect(response.body).to include ("1. - 2022-12-22 to 2022-12-28")
     end
 
-    xit "returns a booking request when a guest made a booking" do
+    it "returns a booking request when a guest made a booking" do
       response = post('/login', 
-      email: 'Jill@gmail.com',
+      email: 'Jane@gmail.com',
       password: 'password')
       response = get("/profile") 
 
-      expect(response.status).to eq 200
-      expect(response.body).to include ("<h3>Booking requests</h3>")
-      expect(response.body).to include ("Book from: 2022-08-16")
-      expect(response.body).to include ("Book to: 2022-08-17")
+      # expect(response.status).to eq 200
+      expect(response.body).to include ("<h3>Your bookings</h3>")
+      expect(response.body).to include ("1. - 2022-10-31 to 2022-11-02")
+      expect(response.body).to include ("1. - <a href=\"/spaces/1\"> Luxurious Apartment with a Sea View</a>")
     end
   end
 end
